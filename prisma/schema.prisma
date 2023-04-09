@@ -10,8 +10,21 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Example {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+model Appointment {
+  id              Int      @id @default(autoincrement())
+  clientName      String
+  clientPhone     String
+  carColor        String
+  carLicense      String
+  carEngine       String
+  appointmentDate DateTime
+  mechanicId      Int
+  mechanic        Mechanic @relation(fields: [mechanicId], references: [id])
+}
+
+model Mechanic {
+  id             Int          @id @default(autoincrement())
+  name           String
+  maxActiveCars  Int
+  appointments   Appointment[]
 }
