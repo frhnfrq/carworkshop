@@ -6,10 +6,21 @@ import { api } from "~/utils/api";
 import toast from "react-hot-toast";
 import Header from "./components/Header";
 import { CircularProgress } from "@mui/material";
+import { isAllDigits } from "~/utils/util";
 
 const appointmentFormSchema = z.object({
   clientName: z.string().min(1, "Client name is required."),
-  clientPhone: z.string().min(1, "Client phone is required."),
+  clientPhone: z
+    .string()
+    .min(1, "Client phone is required.")
+    .refine(
+      (value) => {
+        return isAllDigits(value);
+      },
+      {
+        message: "Please enter a valid phone number.",
+      }
+    ),
   carColor: z.string().min(1, "Car color is required."),
   carLicense: z.string().min(1, "Car license is required."),
   carEngine: z.string().min(1, "Car engine is required."),
