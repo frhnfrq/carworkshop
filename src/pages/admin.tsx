@@ -3,7 +3,7 @@ import Head from "next/head";
 import Header from "./components/Header";
 import { useEffect, useState } from "react";
 import { type RouterOutputs, api } from "~/utils/api";
-import { CircleLoader } from "react-spinners";
+import CircularProgress from "@mui/material/CircularProgress";
 import Modal from "react-modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
@@ -86,7 +86,7 @@ const AppointmentList: NextPage = () => {
   const utils = api.useContext();
   const appointments = api.appointment.getAll.useQuery();
   const mechanics = api.mechanic.getAll.useQuery();
-
+  const [loading, setLoading] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedAppointment, setSelectedAppointment] =
     useState<AppointmentWithMechanic>();
@@ -135,6 +135,7 @@ const AppointmentList: NextPage = () => {
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     // Submit the form data using the api
+    setLoading(true);
     try {
       const validatedFormValues = updateAppointmentFormSchema.parse(formValues);
       updateAppointment.mutate(validatedFormValues);
@@ -148,6 +149,7 @@ const AppointmentList: NextPage = () => {
         toast.error("An error occurred while updating the appointment.");
       }
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -169,11 +171,9 @@ const AppointmentList: NextPage = () => {
     <>
       <div className="flex h-full flex-col  justify-start">
         {appointments.isLoading ? (
-          <CircleLoader
-            size={50}
-            color={"#111111"}
-            loading={appointments.isLoading}
-          />
+          <div className="flex h-full w-full flex-col items-center">
+            <CircularProgress color="primary" size={50} />
+          </div>
         ) : (
           <div>
             <Modal isOpen={modalIsOpen} onRequestClose={handleCloseModal}>
@@ -217,8 +217,13 @@ const AppointmentList: NextPage = () => {
                     <button
                       type="submit"
                       className="rounded bg-blue-500 px-4 py-2 text-white"
+                      disabled={loading}
                     >
-                      Submit
+                      {loading ? (
+                        <CircularProgress color="primary" size={24} />
+                      ) : (
+                        "Submit"
+                      )}
                     </button>
                   </form>
                 </div>
@@ -296,7 +301,7 @@ const AppointmentList: NextPage = () => {
 const MechanicsList: NextPage = () => {
   const utils = api.useContext();
   const mechanics = api.mechanic.getAll.useQuery();
-
+  const [loading, setLoading] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedMechanic, setSelectedMechanic] = useState<Mechanic>();
 
@@ -357,6 +362,7 @@ const MechanicsList: NextPage = () => {
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     // Submit the form data using the api
+    setLoading(true);
     try {
       const validatedFormValues = mechanicFormSchema.parse({
         ...formValues,
@@ -378,6 +384,7 @@ const MechanicsList: NextPage = () => {
         toast.error("An error occurred.");
       }
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -396,11 +403,9 @@ const MechanicsList: NextPage = () => {
     <>
       <div className="flex h-full flex-col  justify-start">
         {mechanics.isLoading ? (
-          <CircleLoader
-            size={50}
-            color={"#111111"}
-            loading={mechanics.isLoading}
-          />
+          <div className="flex h-full w-full flex-col items-center">
+            <CircularProgress color="primary" size={50} />
+          </div>
         ) : (
           <div>
             <Modal isOpen={modalIsOpen} onRequestClose={handleCloseModal}>
@@ -444,8 +449,13 @@ const MechanicsList: NextPage = () => {
                     <button
                       type="submit"
                       className="rounded bg-blue-500 px-4 py-2 text-white"
+                      disabled={loading}
                     >
-                      Submit
+                      {loading ? (
+                        <CircularProgress color="primary" size={24} />
+                      ) : (
+                        "Submit"
+                      )}
                     </button>
                   </form>
                 </div>
