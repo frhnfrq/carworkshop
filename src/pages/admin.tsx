@@ -334,6 +334,17 @@ const MechanicsList: NextPage = () => {
     },
   });
 
+  const deleteMechanic = api.mechanic.delete.useMutation({
+    onError(error) {
+      console.log(error);
+      toast.error(error.message);
+    },
+    onSuccess() {
+      toast.success("Mechanic has been deleted");
+      void utils.mechanic.getAll.invalidate();
+    },
+  });
+
   const [formValues, setFormValues] = useState({
     id: selectedMechanic?.id,
     name: selectedMechanic?.name,
@@ -502,7 +513,7 @@ const MechanicsList: NextPage = () => {
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
                 {mechanics.data?.map((mechanic) => (
-                  <tr key={mechanic.name}>
+                  <tr key={mechanic.id}>
                     <td className="whitespace-nowrap px-6 py-4">
                       <div className="text-sm font-medium text-gray-900">
                         {mechanic.name}
@@ -522,6 +533,14 @@ const MechanicsList: NextPage = () => {
                         }}
                       >
                         Edit
+                      </button>
+                      <button
+                        className="ml-4 text-red-600 hover:text-indigo-900"
+                        onClick={() => {
+                          deleteMechanic.mutate({ id: mechanic.id });
+                        }}
+                      >
+                        Delete
                       </button>
                     </td>
                   </tr>

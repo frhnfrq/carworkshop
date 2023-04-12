@@ -2,12 +2,12 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Appointment {
@@ -19,12 +19,12 @@ model Appointment {
   carEngine       String
   appointmentDate DateTime
   mechanicId      Int
-  mechanic        Mechanic @relation(fields: [mechanicId], references: [id])
+  mechanic        Mechanic @relation(fields: [mechanicId], references: [id], onDelete: Cascade)
 }
 
 model Mechanic {
-  id             Int          @id @default(autoincrement())
-  name           String
-  maxActiveCars  Int
-  appointments   Appointment[]
+  id            Int           @id @default(autoincrement())
+  name          String
+  maxActiveCars Int
+  appointments  Appointment[]
 }
