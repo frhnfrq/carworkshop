@@ -220,7 +220,7 @@ const AppointmentList: NextPage = () => {
                       disabled={loading}
                     >
                       {loading ? (
-                        <CircularProgress color="primary" size={24} />
+                        <CircularProgress sx={{ color: "white" }} size={24} />
                       ) : (
                         "Submit"
                       )}
@@ -452,7 +452,7 @@ const MechanicsList: NextPage = () => {
                       disabled={loading}
                     >
                       {loading ? (
-                        <CircularProgress color="primary" size={24} />
+                        <CircularProgress sx={{ color: "white" }} size={24} />
                       ) : (
                         "Submit"
                       )}

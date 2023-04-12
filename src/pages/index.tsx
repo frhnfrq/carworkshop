@@ -5,6 +5,7 @@ import { z } from "zod";
 import { api } from "~/utils/api";
 import toast from "react-hot-toast";
 import Header from "./components/Header";
+import { CircularProgress } from "@mui/material";
 
 const appointmentFormSchema = z.object({
   clientName: z.string().min(1, "Client name is required."),
@@ -18,7 +19,7 @@ const appointmentFormSchema = z.object({
 
 const Home: NextPage = () => {
   const { data } = api.mechanic.getAll.useQuery();
-
+  const [loading, setLoading] = useState(false);
   const createAppointment = api.appointment.create.useMutation({
     onError(error) {
       console.log(error);
@@ -69,6 +70,7 @@ const Home: NextPage = () => {
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     // Submit the form data using the api
+    setLoading(true);
     try {
       const validatedFormValues = appointmentFormSchema.parse(formValues);
       createAppointment.mutate(validatedFormValues);
@@ -82,6 +84,7 @@ const Home: NextPage = () => {
         toast.error("An error occurred while creating the appointment.");
       }
     }
+    setLoading(false);
   };
 
   return (
@@ -207,8 +210,13 @@ const Home: NextPage = () => {
                   <button
                     type="submit"
                     className="rounded bg-blue-500 px-4 py-2 text-white"
+                    disabled={loading}
                   >
-                    Submit
+                    {loading ? (
+                      <CircularProgress sx={{ color: "white" }} size={24} />
+                    ) : (
+                      "Submit"
+                    )}
                   </button>
                 </form>
               </div>
