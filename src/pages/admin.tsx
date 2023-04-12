@@ -12,8 +12,6 @@ import { z } from "zod";
 import { format } from "date-fns";
 import { type Mechanic } from "@prisma/client";
 
-// Modal.setAppElement("#root");
-
 type AppointmentWithMechanic = RouterOutputs["appointment"]["getAll"][number];
 
 const Admin: NextPage = () => {

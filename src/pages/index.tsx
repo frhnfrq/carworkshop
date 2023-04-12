@@ -12,7 +12,7 @@ const appointmentFormSchema = z.object({
   clientName: z.string().min(1, "Client name is required."),
   clientPhone: z
     .string()
-    .min(1, "Client phone is required.")
+    .min(1, "Client's phone number is required.")
     .refine(
       (value) => {
         return isAllDigits(value);
