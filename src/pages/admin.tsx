@@ -142,6 +142,7 @@ const AppointmentList: NextPage = () => {
       const validatedFormValues = updateAppointmentFormSchema.parse(formValues);
       updateAppointment.mutate(validatedFormValues);
     } catch (error) {
+      setLoading(false);
       if (error instanceof z.ZodError) {
         toast.error(
           error.errors[0]?.message ||
@@ -243,6 +244,30 @@ const AppointmentList: NextPage = () => {
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
                   >
+                    Client Phone
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                  >
+                    Color
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                  >
+                    License
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                  >
+                    Engine
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                  >
                     Mechanic Name
                   </th>
                   <th
@@ -265,6 +290,26 @@ const AppointmentList: NextPage = () => {
                     <td className="whitespace-nowrap px-6 py-4">
                       <div className="text-sm font-medium text-gray-900">
                         {appointment.clientName}
+                      </div>
+                    </td>
+                    <td className="whitespace-nowrap px-6 py-4">
+                      <div className="text-sm font-medium text-gray-900">
+                        {appointment.clientPhone}
+                      </div>
+                    </td>
+                    <td className="whitespace-nowrap px-6 py-4">
+                      <div className="text-sm font-medium text-gray-900">
+                        {appointment.carColor}
+                      </div>
+                    </td>
+                    <td className="whitespace-nowrap px-6 py-4">
+                      <div className="text-sm font-medium text-gray-900">
+                        {appointment.carLicense}
+                      </div>
+                    </td>
+                    <td className="whitespace-nowrap px-6 py-4">
+                      <div className="text-sm font-medium text-gray-900">
+                        {appointment.carEngine}
                       </div>
                     </td>
                     <td className="whitespace-nowrap px-6 py-4">
@@ -394,6 +439,7 @@ const MechanicsList: NextPage = () => {
         createMechanic.mutate(validatedFormValues);
       }
     } catch (error) {
+      setLoading(false);
       if (error instanceof z.ZodError) {
         toast.error(error.errors[0]?.message || "An error occurred.");
       } else {

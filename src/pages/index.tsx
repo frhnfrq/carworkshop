@@ -77,6 +77,7 @@ const Home: NextPage = () => {
       const validatedFormValues = appointmentFormSchema.parse(formValues);
       createAppointment.mutate(validatedFormValues);
     } catch (error) {
+      setLoading(false);
       if (error instanceof z.ZodError) {
         toast.error(
           error.errors[0]?.message ||
