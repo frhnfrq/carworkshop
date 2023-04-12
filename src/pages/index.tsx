@@ -24,10 +24,12 @@ const Home: NextPage = () => {
     onError(error) {
       console.log(error);
       toast.error(error.message);
+      setLoading(false);
     },
     onSuccess() {
       toast.success("Appointment has been created");
       resetForm();
+      setLoading(false);
     },
   });
 
@@ -84,7 +86,6 @@ const Home: NextPage = () => {
         toast.error("An error occurred while creating the appointment.");
       }
     }
-    setLoading(false);
   };
 
   return (
@@ -209,7 +210,7 @@ const Home: NextPage = () => {
                   </label>
                   <button
                     type="submit"
-                    className="rounded bg-blue-500 px-4 py-2 text-white"
+                    className="h-[40px] w-[100px] rounded bg-blue-500 px-4 py-2 text-white"
                     disabled={loading}
                   >
                     {loading ? (

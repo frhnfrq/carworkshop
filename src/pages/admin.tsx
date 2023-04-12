@@ -95,11 +95,13 @@ const AppointmentList: NextPage = () => {
     onError(error) {
       console.log(error);
       toast.error(error.message);
+      setLoading(false);
     },
     onSuccess() {
       toast.success("Appointment has been updated");
       handleCloseModal();
       void utils.appointment.getAll.invalidate();
+      setLoading(false);
     },
   });
 
@@ -149,7 +151,6 @@ const AppointmentList: NextPage = () => {
         toast.error("An error occurred while updating the appointment.");
       }
     }
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -216,7 +217,7 @@ const AppointmentList: NextPage = () => {
                     </label>
                     <button
                       type="submit"
-                      className="rounded bg-blue-500 px-4 py-2 text-white"
+                      className="h-[40px] w-[100px] rounded bg-blue-500 px-4 py-2 text-white"
                       disabled={loading}
                     >
                       {loading ? (
@@ -309,11 +310,13 @@ const MechanicsList: NextPage = () => {
     onError(error) {
       console.log(error);
       toast.error(error.message);
+      setLoading(false);
     },
     onSuccess() {
       toast.success("Mechanic has been updated");
       handleCloseModal();
       void utils.mechanic.getAll.invalidate();
+      setLoading(false);
     },
   });
 
@@ -321,11 +324,13 @@ const MechanicsList: NextPage = () => {
     onError(error) {
       console.log(error);
       toast.error(error.message);
+      setLoading(false);
     },
     onSuccess() {
       toast.success("Mechanic has been created");
       handleCloseModal();
       void utils.mechanic.getAll.invalidate();
+      setLoading(false);
     },
   });
 
@@ -384,7 +389,6 @@ const MechanicsList: NextPage = () => {
         toast.error("An error occurred.");
       }
     }
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -448,7 +452,7 @@ const MechanicsList: NextPage = () => {
                     </label>
                     <button
                       type="submit"
-                      className="rounded bg-blue-500 px-4 py-2 text-white"
+                      className="h-[40px] w-[100px] rounded bg-blue-500 px-4 py-2 text-white"
                       disabled={loading}
                     >
                       {loading ? (
